@@ -8,7 +8,7 @@ void run_scheduler(double attention_level)
 {
     int quantum;
 
-    if (attention_level > 0.6)
+    if (attention_level > 40.0)
     {
         quantum = 1;
 
