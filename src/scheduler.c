@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <unistd.h>
 
 #include "scheduler.h"
@@ -7,6 +8,18 @@
 void run_scheduler(double attention_level)
 {
     int quantum;
+
+    clock_t start, end;
+    double cpu_time_used;
+
+    Task tasks[5] =
+    {
+        {1, 3},
+        {2, 1},
+        {3, 2},
+        {4, 1},
+        {5, 3}
+    };
 
     if (attention_level > 40.0)
     {
@@ -25,9 +38,19 @@ void run_scheduler(double attention_level)
 
     for (int i = 0; i < 5; i++)
     {
-        printf("\nRunning task %d with quantum %d...\n", i + 1, quantum);
+        printf("\n[TASK %d]\n", tasks[i].task_id);
+        printf("Priority: %d\n", tasks[i].priority);
+        printf("Quantum: %d\n", quantum);
 
-        heavy_task(i + 1);
+        start = clock();
+
+        heavy_task(tasks[i].task_id);
+
+        end = clock();
+
+        cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+
+        printf("Execution Time: %.2f seconds\n", cpu_time_used);
 
         sleep(quantum);
     }

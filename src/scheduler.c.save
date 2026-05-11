@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <time.h>
+#include <unistd.h>
+
+#include "scheduler.h"
+#include "workload.h"
+
+void run_scheduler(double attention_level)
+{
+    int quantum;
+    clock_t start, end;
+    double cpu_time_used;
+
+    if (attention_level > 40.0)
+    {
+        quantum = 1;
+
+        printf("\n[MODE] HIGH ATTENTION\n");
+        printf("Aggressive scheduling enabled.\n");
+    }
+    else
+    {
+        quantum = 3;
+
+        printf("\n[MODE] LOW ATTENTION\n");
+        printf("Conservative scheduling enabled.\n");
+    }
+
+    for (int i = 0; i < 5; i++)
+  GNU nano 8.4                   src/scheduler.c                             
+#include <stdio.h>
+#include <time.h>
+#include <unistd.h>
+
+#include "scheduler.h"
+#include "workload.h"
+
+void run_scheduler(double attention_level)
+{
+    int quantum;
+    clock_t start, end;
+    double cpu_time_used;
+
+    if (attention_level > 40.0)
+    {
+        quantum = 1;
+
+        printf("\n[MODE] HIGH ATTENTION\n");
+        printf("Aggressive scheduling enabled.\n");
+    }
+    else
+    {
+        quantum = 3;
+    {
+        printf("\nRunning task %d with quantum %d...\n", i + 1, quantum);
+
+        start = clock();
+    	heavy_task(tasks[i].task_id);
+	end = clock();
+
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+
+	printf("Execution Time: %.2f seconds\n", cpu_time_used);
+        
+	sleep(quantum);
+    }
+}
