@@ -24,7 +24,7 @@ void run_scheduler(double attention_level)
         {5, 3}
     };
 
-    if (attention_level > 40.0)
+    if (attention_level > 100.0)
     {
         quantum = 1;
 
@@ -48,6 +48,12 @@ void run_scheduler(double attention_level)
         printf("Quantum: %d\n", quantum);
 
         start = clock();
+
+        if (attention_level <= 100.0 && tasks[i].priority == 3)
+        {
+            printf("Task skipped due to low attention.\n");
+            continue;
+        }
 
         heavy_task(tasks[i].task_id);
 
